@@ -176,7 +176,7 @@ public class GPGService implements GoogleApiClient.ConnectionCallbacks, GoogleAp
 
     protected Activity activity;
     protected GoogleApiClient client;
-    protected static final String[] defaultScopes = new String[]{Scopes.GAMES, Scopes.PLUS_LOGIN};
+    protected static final String[] defaultScopes = new String[]{Scopes.GAMES, Scopes.PLUS_LOGIN, Scopes.DRIVE_APPFOLDER};
     protected ArrayList<String> scopes = new ArrayList<String>();
     protected CompletionCallback intentCallback;
     protected CompletionCallback permissionsCallback;
@@ -349,14 +349,15 @@ public class GPGService implements GoogleApiClient.ConnectionCallbacks, GoogleAp
         builder.addApi(Plus.API);
         builder.addScope(Plus.SCOPE_PLUS_LOGIN);
         builder.addScope(Plus.SCOPE_PLUS_PROFILE);
+        builder.addApi(Drive.API).addScope(Drive.SCOPE_APPFOLDER);
         //TODO: better way to handle extra scopes
-        if (scopes != null) {
+        /*if (scopes != null) {
             for (String str: scopes) {
                 if (str.equalsIgnoreCase(Drive.SCOPE_APPFOLDER.toString()) || str.toLowerCase().contains("appfolder")) {
                     builder.addApi(Drive.API).addScope(Drive.SCOPE_APPFOLDER);
                 }
             }
-        }
+        }*/
 
         client = builder.build();
     }
