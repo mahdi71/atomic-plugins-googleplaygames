@@ -85,7 +85,7 @@
 					
 
 
-		<h1 class="page-title">Source: /Users/imanolmartin/Development/Projects/AtomicPlugins/atomic-plugins-googleplaygames/src/js/cocoon_googleplaygames.js</h1>
+		<h1 class="page-title">Source: /Users/HernanZh/Documents/Projects/CordovaAtomicGooglePlayGames/src/js/cocoon_googleplaygames.js</h1>
     
     <section>
         <article>
@@ -338,6 +338,24 @@
                     //TODO
                 }
              },
+             
+             /**
+             * Request permissions from user
+             * @memberof Cocoon.Social.GooglePlayGames
+             * @function requestPermissions
+             * @param {Function} callback The callback function. It receives the following parameters:
+             * - Error.
+             */
+            requestPermissions: function(callback) {
+                if (this.nativeAvailable) {
+                    Cocoon.exec(this.serviceName, "requestPermissions", [], callback, callback);
+                }
+                else {
+                    //TODO
+                }
+             },
+             
+             
 
         };
 
