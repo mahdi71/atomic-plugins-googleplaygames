@@ -427,7 +427,7 @@ public class GPGService implements GoogleApiClient.ConnectionCallbacks, GoogleAp
                     GetServerAuthCodeResult result = Games.getGamesServerAuthCode(client, clientId).await();  
                     if (result.isSuccess()) {  
                         String authCode = result.getCode();
-                        return token;
+                        return authCode;
                     } else {
                         // ???
                         Exception e = new Exception("Could not get token.");
