@@ -176,6 +176,7 @@ public class GPGService implements GoogleApiClient.ConnectionCallbacks, GoogleAp
 
     protected Activity activity;
     protected GoogleApiClient client;
+    protected String clientId;
     protected static final String[] defaultScopes = new String[]{Scopes.GAMES, Scopes.PLUS_LOGIN};
     protected ArrayList<String> scopes = new ArrayList<String>();
     protected CompletionCallback intentCallback;
