@@ -74,6 +74,7 @@ public class GPGPlugin extends CordovaPlugin implements GPGService.SessionCallba
 
         JSONObject params = args.optJSONObject(0);
         String[] scopes = null;
+        String clientId = "";
         if (params != null) {
             JSONArray array = params.optJSONArray("scopes");
             if (array != null) {
@@ -82,13 +83,14 @@ public class GPGPlugin extends CordovaPlugin implements GPGService.SessionCallba
                     scopes[i] = array.getString(i);
                 }
             }
+            clientId = params.optString("clientId");
         }
 
 
         _service.setSessionListener(this);
         _service.setWillStartActivityListener(this);
         _service.setExecutor(cordova.getThreadPool());
-        _service.init(scopes);
+        _service.init(scopes, clientId);
         ctx.sendPluginResult(new PluginResult(PluginResult.Status.OK, (String) null));
     }
 

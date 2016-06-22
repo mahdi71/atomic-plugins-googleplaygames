@@ -194,21 +194,23 @@ public class GPGService implements GoogleApiClient.ConnectionCallbacks, GoogleAp
     public GPGService(Activity activity)
     {
         sharedInstance = this;
+        this.clientId = "";
         this.activity = activity;
         this.trySilentAuthentication = this.activity.getPreferences(Activity.MODE_PRIVATE).getBoolean(GP_SIGNED_IN_PREFERENCE, false);
-        this.requestPermission = new Runnable() {
-            @Override
-            public void run() {
-                GPGService.this.requestPermission();
-            }
-        };
+        // this.requestPermission = new Runnable() {
+        //     @Override
+        //     public void run() {
+        //         GPGService.this.requestPermission();
+        //     }
+        // };
     }
 
     public void init() {
         this.init(null);
     }
-    public void init(String[] extraScopes)
+    public void init(String[] extraScopes, String clientId)
     {
+        this.clientId = clientId;
         for (String scope : defaultScopes) {
             this.scopes.add(scope);
         }
@@ -420,9 +422,17 @@ public class GPGService implements GoogleApiClient.ConnectionCallbacks, GoogleAp
             protected Object doInBackground(Void... params) {
                 try
                 {
-                    String scope = "oauth2:" + GPUtils.scopeArrayToString(GPGService.this.scopes);
-                    String token = GoogleAuthUtil.getToken(GPGService.this.activity, Plus.AccountApi.getAccountName(client), scope);
-                    return token;
+                    // String scope = "oauth2:" + GPUtils.scopeArrayToString(GPGService.this.scopes);
+                    // String token = GoogleAuthUtil.getToken(GPGService.this.activity, Plus.AccountApi.getAccountName(client), scope);
+                    GetServerAuthCodeResult result = Games.getGamesServerAuthCode(client, clientId).await();  
+                    if (result.isSuccess()) {  
+                        String authCode = result.getCode();
+                        return token;
+                    } else {
+                        // ???
+                        Exception e = new Exception("Could not get token.");
+                        throw e;
+                    }
                 }
                 catch (Exception ex)
                 {
@@ -579,21 +589,20 @@ public class GPGService implements GoogleApiClient.ConnectionCallbacks, GoogleAp
             this.createClient();
         }
 
-        if (hasPermission()) {
+        // if (hasPermission()) {
             client.connect();
-
-        } else {
-            permissionsCallback = new CompletionCallback() {
-                @Override
-                public void onComplete(Error error) {
-                    if (error == null)
-                        client.connect();
-                    else
-                        callback.onComplete(null, error);
-                }
-            };
-            requestPermission.run();
-        }
+        // } else {
+        //     permissionsCallback = new CompletionCallback() {
+        //         @Override
+        //         public void onComplete(Error error) {
+        //             if (error == null)
+        //                 client.connect();
+        //             else
+        //                 callback.onComplete(null, error);
+        //         }
+        //     };
+        //     requestPermission.run();
+        // }
     }
 
     public void logout(CompletionCallback callback) {
