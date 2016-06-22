@@ -207,7 +207,7 @@ public class GPGService implements GoogleApiClient.ConnectionCallbacks, GoogleAp
     }
 
     public void init() {
-        this.init(null);
+        this.init(null, "");
     }
     public void init(String[] extraScopes, String clientId)
     {
