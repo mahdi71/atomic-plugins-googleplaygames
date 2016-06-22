@@ -32,24 +32,7 @@ public class GPGPlugin extends CordovaPlugin implements GPGService.SessionCallba
     @Override
     protected void pluginInitialize() {
         _service = new GPGService(this.cordova.getActivity());
-        _service.setRequestPermission(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    Method requestPermission = CordovaInterface.class.getDeclaredMethod("requestPermissions", CordovaPlugin.class, int.class, String[].class);
-                    requestPermission.invoke(GPGPlugin.this.cordova, GPGPlugin.this, GPGService.REQUEST_PERMISSIONS_GET_ACCOUNTS, new String[]{Manifest.permission.GET_ACCOUNTS});
-
-                } catch (NoSuchMethodException e) {
-                    LOG.d(this.getClass().getSimpleName(), "No need to check for permission " + Manifest.permission.GET_ACCOUNTS);
-
-                } catch (IllegalAccessException e) {
-                    LOG.e(this.getClass().getSimpleName(), "IllegalAccessException when checking permission " + Manifest.permission.GET_ACCOUNTS, e);
-
-                } catch(InvocationTargetException e) {
-                    LOG.e(this.getClass().getSimpleName(), "invocationTargetException when checking permission " + Manifest.permission.GET_ACCOUNTS, e);
-                }
-            }
-        });
+        
     }
 
     @Override
@@ -336,6 +319,32 @@ public class GPGPlugin extends CordovaPlugin implements GPGService.SessionCallba
             @Override
             public void onComplete(GPGService.GameSnapshot data, GPGService.Error error) {
                 notifySavedGameCallback(data, error, ctx);
+            }
+        });
+    }
+    
+    @SuppressWarnings("unused")
+    public void requestPermissions(CordovaArgs args, final CallbackContext ctx) throws JSONException {
+        _service.setRequestPermission(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    Method requestPermission = CordovaInterface.class.getDeclaredMethod("requestPermissions", CordovaPlugin.class, int.class, String[].class);
+                    requestPermission.invoke(GPGPlugin.this.cordova, GPGPlugin.this, GPGService.REQUEST_PERMISSIONS_GET_ACCOUNTS, new String[]{Manifest.permission.GET_ACCOUNTS});
+                    ctx.sendPluginResult(new PluginResult(PluginResult.Status.OK, (String) null));
+
+                } catch (NoSuchMethodException e) {
+                    LOG.d(this.getClass().getSimpleName(), "No need to check for permission " + Manifest.permission.GET_ACCOUNTS);
+                    ctx.sendPluginResult(new PluginResult(PluginResult.Status.OK, "No need to check for permission " + Manifest.permission.GET_ACCOUNTS));
+
+                } catch (IllegalAccessException e) {
+                    LOG.e(this.getClass().getSimpleName(), "IllegalAccessException when checking permission " + Manifest.permission.GET_ACCOUNTS, e);
+                    ctx.sendPluginResult(new PluginResult(PluginResult.Status.ERROR, "IllegalAccessException when checking permission " + Manifest.permission.GET_ACCOUNTS));
+
+                } catch(InvocationTargetException e) {
+                    LOG.e(this.getClass().getSimpleName(), "invocationTargetException when checking permission " + Manifest.permission.GET_ACCOUNTS, e);
+                    ctx.sendPluginResult(new PluginResult(PluginResult.Status.ERROR, "invocationTargetException when checking permission " + Manifest.permission.GET_ACCOUNTS));
+                }
             }
         });
     }

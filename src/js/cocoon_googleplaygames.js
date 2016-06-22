@@ -247,6 +247,24 @@
                     //TODO
                 }
              },
+             
+             /**
+             * Request permissions from user
+             * @memberof Cocoon.Social.GooglePlayGames
+             * @function requestPermissions
+             * @param {Function} callback The callback function. It receives the following parameters:
+             * - Error.
+             */
+            requestPermissions: function(callback) {
+                if (this.nativeAvailable) {
+                    Cocoon.exec(this.serviceName, "requestPermissions", [], callback, callback);
+                }
+                else {
+                    //TODO
+                }
+             },
+             
+             
 
         };
 
