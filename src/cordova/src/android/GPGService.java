@@ -423,17 +423,18 @@ public class GPGService implements GoogleApiClient.ConnectionCallbacks, GoogleAp
             protected Object doInBackground(Void... params) {
                 try
                 {
-                    // String scope = "oauth2:" + GPUtils.scopeArrayToString(GPGService.this.scopes);
-                    // String token = GoogleAuthUtil.getToken(GPGService.this.activity, Plus.AccountApi.getAccountName(client), scope);
-                    GetServerAuthCodeResult result = Games.getGamesServerAuthCode(client, clientId).await();  
-                    if (result.isSuccess()) {  
-                        String authCode = result.getCode();
-                        return authCode;
-                    } else {
-                        // ???
-                        Exception e = new Exception("Could not get token.");
-                        throw e;
-                    }
+                    String scope = "oauth2:" + GPUtils.scopeArrayToString(GPGService.this.scopes);
+                    String token = GoogleAuthUtil.getToken(GPGService.this.activity, Plus.AccountApi.getAccountName(client), scope);
+                    return token;
+                    // Games.GetServerAuthCodeResult result = Games.getGamesServerAuthCode(client, clientId).await();  
+                    // if (result.isSuccess()) {  
+                    //     String authCode = result.getCode();
+                    //     return authCode;
+                    // } else {
+                    //     // ???
+                    //     Exception e = new Exception("Could not get token.");
+                    //     throw e;
+                    // }
                 }
                 catch (Exception ex)
                 {
