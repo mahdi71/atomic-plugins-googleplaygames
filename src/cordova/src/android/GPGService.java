@@ -423,9 +423,10 @@ public class GPGService implements GoogleApiClient.ConnectionCallbacks, GoogleAp
             protected Object doInBackground(Void... params) {
                 try
                 {
-                    String scope = "oauth2:" + GPUtils.scopeArrayToString(GPGService.this.scopes);
-                    String token = GoogleAuthUtil.getToken(GPGService.this.activity, Plus.AccountApi.getAccountName(client), scope);
-                    return token;
+                    // String scope = "oauth2:" + GPUtils.scopeArrayToString(GPGService.this.scopes);
+                    // String token = GoogleAuthUtil.getToken(GPGService.this.activity, Plus.AccountApi.getAccountName(client), scope);
+                    // return token;
+                    return "1";
                     // Games.GetServerAuthCodeResult result = Games.getGamesServerAuthCode(client, clientId).await();  
                     // if (result.isSuccess()) {  
                     //     String authCode = result.getCode();
@@ -493,15 +494,16 @@ public class GPGService implements GoogleApiClient.ConnectionCallbacks, GoogleAp
 
     private String getMyId() {
         if (isLoggedIn()) {
-            try {
-                Person p = Plus.PeopleApi.getCurrentPerson(client);
-                if (p != null) {
-                    return p.getId();
-                }
+            // try {
+            //     Person p = Plus.PeopleApi.getCurrentPerson(client);
+            //     if (p != null) {
+            //         return p.getId();
+            //     }
 
-            } catch(IllegalStateException e) {
-                e.printStackTrace();
-            }
+            // } catch(IllegalStateException e) {
+            //     e.printStackTrace();
+            // }
+            return "";
         }
 
         return "";
