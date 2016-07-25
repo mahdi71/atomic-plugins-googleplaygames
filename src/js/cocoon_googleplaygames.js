@@ -6,30 +6,6 @@
     var Cocoon = window.Cocoon;
 
     /**
-    * @fileOverview
-    <h2>About Atomic Plugins</h2>
-    <p>Atomic Plugins provide an elegant and minimalist API and are designed with portability in mind from the beginning. Framework dependencies are avoided by design so the plugins can run on any platform and can be integrated with any app framework or game engine.
-    <br/><p>You can contribute and help to create more awesome plugins. </p>
-    <h2>Atomic Plugins for Google Play Games</h2>
-    <p>This repo contains Google Play Games APIs designed using the Atomic Plugins paradigm. Connect your app to Google Play Games and take advantage of all the features provided. The API is already available in many languagues and we have the plan to add more in the future.</p>
-    <h3>Setup your project</h3>
-    <p>Releases are deployed to NPM. 
-    You only have to install the desired plugins using Cordova CLI and <a href="https://cocoon.io"/>Cocoon Cloud service</a>.</p>
-    <ul>
-    <code>
-    cordova plugin add cocoon-plugin-social-android-googleplaygames<br/>
-    </code>
-    </ul>
-    <h3>Documentation</h3>
-    <p>In this section you will find all the documentation you need for using this plugin in your Cordova project. 
-    Select the specific namespace below to open the relevant documentation section:</p>
-    <ul>
-    <li><a href="http://ludei.github.io/atomic-plugins-docs/dist/doc/js/Cocoon.Social.GooglePlayGames.html">Google Play Games</a></li>
-    </ul>
-    * @version 1.0
-    */
-
-    /**
      * Cocoon Social Interface for the Google Play Games Extension.
      * @namespace Cocoon.Social.GooglePlayGames
      */
@@ -80,7 +56,6 @@
              * @param {Object} params Initialization options.
              * @param {string} params.clientId The application clientID. Omit if its already provided in the native application via cloud configuration.
              * @param {string} params.defaultLeaderboard The default leaderboard ID. You can omit it if you specify the leaderboardID in all the score queries or submits.
-             * @param {array} params.scopes Additional scope identifiers. Plus & Games APIs are included by default. To use cloud saved game include the 'drive.appfolder' scope.
              * @param {boolean} params.showAchievementNotifications Enables or disables the native view notifications when an achievement is unlocked.
              * @param {function} callback The initialization completed callback. Received params: error
              */
@@ -171,71 +146,7 @@
              */
             share: function() {
                 window.open(this.href,'', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600');
-            },
-
-
-            /**
-             * Submit event
-             * @param {string} eventId
-             * @param {number} increment
-             */
-            submitEvent: function(eventId, increment) {
-
-                if (this.nativeAvailable) {
-                    Cocoon.exec(this.serviceName, "submitEvent", [eventId, increment], null, null);
-                }
-                else {
-                    //TODO
-                }
-            },
-
-            /**
-             * Loads a Saved Game Snapshot from the cloud
-             * @param identifier snapshot identifier
-             * @param {Function} callback The callback function. It receives the following parameters:
-             * - Snapshot: Object with the title, description adn identifier of the snapshort. The data property contains the raw bytes converted to string.
-             * - Error.
-             */
-            loadSavedGame: function(identifier, callback) {
-
-                if (this.nativeAvailable) {
-                    Cocoon.exec(this.serviceName, "loadSavedGame", [identifier], callback, callback);
-                }
-                else {
-                    //TODO
-                }
-             },
-
-            /**
-             * Writes a SavedGame Snapshot to the cloud
-             * @param snapshot snapshot object to store. An object with identifier, title, description and data properties. New snapshot is created if the identifier is a new one.
-             * @param {Function} callback The callback function. It receives the following parameters:
-             * - Error.
-             */
-            writeSavedGame: function(snapshot, callback) {
-
-                if (this.nativeAvailable) {
-                    Cocoon.exec(this.serviceName, "writeSavedGame", [snapshot], callback, callback);
-                }
-                else {
-                    //TODO
-                }
-             },
-
-             /**
-             * Show Google Play saved games activity and allows the user to choose a saved game or to create a new one
-             * @param {Function} callback The callback function. It receives the following parameters:
-             * - Snapshot: The selected snapshot metada, use loadSavedGame to fetch its data. If the user creates a new snapshot the idenfier will be empty.
-             * - Error.
-             */
-            showSavedGames: function(callback) {
-                if (this.nativeAvailable) {
-                    Cocoon.exec(this.serviceName, "showSavedGames", [], callback, callback);
-                }
-                else {
-                    //TODO
-                }
-             },
+            }
 
         };
 
