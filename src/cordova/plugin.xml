@@ -7,7 +7,7 @@
     <keywords>cordova,Social,google,play,games,game,center,achievements,leaderboards,cocoon</keywords>
     <repo>https://github.com/ludei/atomic-plugins-googleplaygames</repo>
     <platform name="android">
-        <preference name="APP_ID" />
+        <preference name="APP_ID" default="1062454933350" />
 
         <source-file src="src/android/GPGService.java" target-dir="src/com/ludei/googleplaygames" />
         <source-file src="src/android/GPUtils.java" target-dir="src/com/ludei/googleplaygames" />
